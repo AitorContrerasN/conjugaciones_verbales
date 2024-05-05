@@ -93,7 +93,7 @@ urls = [
 df_links = urls_to_dataframe(urls)
 
 # Exporta el DataFrame a un archivo Excel
-excel_path = '/Users/aitor/Desktop/links.xlsx'
+excel_path = '/Users/aitor/Desktop/conjugaciones_verbales/archivos_datos/archivos_exportados/resultados.xlsx'
 df_links.to_excel(excel_path, index=False)
 
 print(f"El DataFrame ha sido exportado a {excel_path}")
