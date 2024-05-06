@@ -1,4 +1,6 @@
+import requests
 from bs4 import BeautifulSoup, NavigableString
+import pandas as pd
 
 # Tu HTML como una string
 html_content = '''<html lang="es"><head lang="es">
@@ -459,7 +461,76 @@ document.write(conjugate_activar('Condicional compuesto'));
 </div><div id="lastPanelId"></div><!-- end mainpanel --></div><div class="clearer"></div></div>
 <ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" style="display: none !important;" data-ad-status="unfilled"><div id="aswift_4_host" style="border: none; height: 0px; width: 0px; margin: 0px; padding: 0px; position: relative; visibility: visible; background-color: transparent; display: inline-block;"><iframe id="aswift_4" name="aswift_4" style="left:0;position:absolute;top:0;border:0;width:undefinedpx;height:undefinedpx;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="https://pagead2.googlesyndication.com/pagead/ads?ltd_cs=1&amp;client=ca-pub-3415784549533464&amp;output=html&amp;adk=1812271804&amp;adf=3025194257&amp;abgtt=3&amp;lmt=1711871510&amp;plat=2%3A16777216%2C8%3A4194304%2C9%3A134250504%2C16%3A8388608%2C17%3A32%2C24%3A32%2C25%3A32%2C30%3A1081344%2C32%3A32%2C41%3A32%2C42%3A32&amp;plas=128x595_l%7C279x595_r&amp;format=0x0&amp;url=https%3A%2F%2Fwww.vocabulix.com%2Fconjugacion3%2Factivar.html&amp;pra=7&amp;wgl=1&amp;easpi=0&amp;asro=0&amp;uach=WyJtYWNPUyIsIjEyLjcuMiIsIng4NiIsIiIsIjEyMy4wLjYzMTIuODciLG51bGwsMCxudWxsLCI2NCIsW1siR29vZ2xlIENocm9tZSIsIjEyMy4wLjYzMTIuODciXSxbIk5vdDpBLUJyYW5kIiwiOC4wLjAuMCJdLFsiQ2hyb21pdW0iLCIxMjMuMC42MzEyLjg3Il1dLDBd&amp;dt=1711875570201&amp;bpp=1&amp;bdt=269&amp;idt=1&amp;shv=r20240327&amp;mjsv=m202403250101&amp;ptt=9&amp;saldr=aa&amp;abxe=1&amp;eo_id_str=ID%3Dbb8f32e6ab7cfb3f%3AT%3D1711870727%3ART%3D1711875539%3AS%3DAA-AfjbnZc70O3pI3j4Vx3TFgXqN&amp;prev_fmts=300x250%2C160x600%2C300x250&amp;prev_slotnames=2459122336&amp;nras=1&amp;correlator=6372637868985&amp;frm=20&amp;pv=1&amp;ga_vid=347672392.1711875570&amp;ga_sid=1711875570&amp;ga_hid=1893198956&amp;ga_fc=0&amp;u_tz=120&amp;u_his=20&amp;u_h=900&amp;u_w=1440&amp;u_ah=875&amp;u_aw=1440&amp;u_cd=24&amp;u_sd=2&amp;dmc=8&amp;adx=-12245933&amp;ady=-12245933&amp;biw=1440&amp;bih=754&amp;scr_x=0&amp;scr_y=0&amp;eid=44759875%2C44759926%2C44759842%2C31081576%2C31082197%2C44795921%2C95326315%2C95329017%2C95322183%2C95328825%2C31078663%2C31078665%2C31078668%2C31078670&amp;oid=2&amp;pvsid=4425896326566574&amp;tmod=667825585&amp;uas=0&amp;nvt=1&amp;fsapi=1&amp;ref=https%3A%2F%2Fwww.vocabulix.com%2Fconjugacion2%2Fa_spanish.html&amp;fc=896&amp;brdim=0%2C25%2C0%2C25%2C1440%2C25%2C1440%2C875%2C1440%2C754&amp;vis=1&amp;rsz=%7C%7Cs%7C&amp;abl=NS&amp;fu=32768&amp;bc=31&amp;bz=1&amp;td=1&amp;nt=1&amp;ifi=5&amp;uci=a!5&amp;fsb=1&amp;dtd=11" data-google-container-id="a!5" tabindex="0" title="Advertisement" aria-label="Advertisement" data-load-complete="true"></iframe></div></ins><div id="loom-companion-mv3" ext-id="liecbddmkiiihnedobmlmillhodjkdmb"><section id="shadow-host-companion"></section></div><ins class="adsbygoogle adsbygoogle-noablate" data-adsbygoogle-status="done" data-anchor-status="dismissed" data-ad-status="filled" style="display: none; width: 100% !important; height: 129px !important; bottom: -124px; clear: none !important; float: none !important; left: 0px; margin: 0px !important; max-height: none !important; max-width: none !important; opacity: 1; overflow: visible !important; padding: 0px !important; position: fixed; right: auto !important; top: auto !important; vertical-align: baseline !important; visibility: visible !important; z-index: 2147483647; background: rgb(250, 250, 250) !important;" data-anchor-shown="true"><div class="grippy-host"></div><div id="aswift_5_host" style="border: none !important; height: 124px !important; width: 100% !important; margin: 0px !important; padding: 0px !important; position: relative !important; visibility: visible !important; background-color: transparent !important; display: inline-block !important; inset: auto !important; clear: none !important; float: none !important; max-height: none !important; max-width: none !important; opacity: 1 !important; overflow: visible !important; vertical-align: baseline !important; z-index: auto !important;"><iframe id="aswift_5" name="aswift_5" style="width: 1005px !important; height: 124px !important; display: block; margin: 0px auto;" sandbox="allow-forms allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-top-navigation-by-user-activation" width="1005" height="124" frameborder="0" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allow="attribution-reporting; run-ad-auction" src="https://pagead2.googlesyndication.com/pagead/html/r20240327/r20110914/zrt_lookup_fy2021.html#RS-0-&amp;adk=1812271801&amp;client=ca-pub-3415784549533464&amp;fa=1&amp;ifi=6&amp;uci=a!6&amp;btvi=3" data-google-container-id="a!6" tabindex="0" title="Advertisement" aria-label="Advertisement" data-google-query-id="CNvolrqRnoUDFQui0QQdoaEPhA" data-load-complete="true"></iframe></div></ins></body></html>'''  # Reemplaza esto con tu HTML
 
-# Parseamos el HTML
+
+# Importamos Excel con las URLs
+archivo_excel = '/Users/aitor/Desktop/conjugaciones_verbales/archivos_datos/archivos_para_importar/listado_urls_para_scraping_conjugaciones.xlsx'
+df = pd.read_excel(archivo_excel)
+print(df)
+
+# Función para extraer las conjugaciones de una página web
+def extraer_conjugaciones(url):
+    response = requests.get(url)
+    conjugations = set()
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        conj_blocks = soup.find_all('div', class_='conjBlock')
+        prefixes = ("yo ", "tu ", "tú ", "él ", "el ", "nosotros ", "vosotros ", "ellos ")
+
+        for block in conj_blocks:
+            for child in block.children:
+                if isinstance(child, NavigableString):
+                    text = child.strip()
+                    if text:
+                        for prefix in prefixes:
+                            if text.startswith(prefix):
+                                text = text[len(prefix):]
+                                break
+                        conjugations.add(text)
+                elif child.name == 'br':
+                    next_sib = child.nextSibling
+                    if next_sib and isinstance(next_sib, NavigableString):
+                        text = next_sib.strip()
+                        if text:
+                            for prefix in prefixes:
+                                if text.startswith(prefix):
+                                    text = text[len(prefix):]
+                                    break
+                            conjugations.add(text)
+    else:
+        print('Error al obtener la página:', response.status_code)
+
+    return sorted(conjugations)  # Devolver conjugaciones ordenadas
+
+# Lista para almacenar todas las conjugaciones
+todas_conjugaciones = []
+
+# Iterar sobre cada URL en el DataFrame
+for index, row in df.iterrows():
+    url = row['url_completa']
+    conjugaciones = extraer_conjugaciones(url)
+    todas_conjugaciones.extend(conjugaciones)  # Agregar conjugaciones a la lista
+
+# Convertir la lista de conjugaciones a un DataFrame
+resultados_conjugaciones_df = pd.DataFrame(todas_conjugaciones, columns=['Conjugaciones'])
+
+# Guardar los resultados en un archivo Excel
+ruta_excel = '/Users/aitor/Desktop/conjugaciones_verbales/archivos_datos/archivos_exportados/resultados_conjugaciones.xlsx'
+resultados_conjugaciones_df.to_excel(ruta_excel, index=False)
+
+print(f'Archivo guardado en {ruta_excel}')
+
+
+
+
+
+
+
+
+
+
+
+
+'''# Parseamos el HTML
 soup = BeautifulSoup(html_content, 'html.parser')
 
 # Encuentra todos los bloques que contienen las conjugaciones
@@ -500,3 +571,4 @@ conjugations_list = list(conjugations)
 # Imprime todas las conjugaciones únicas encontradas
 for conjugation in sorted(conjugations_list):  # sorted para imprimir de manera ordenada
     print(conjugation)
+'''
